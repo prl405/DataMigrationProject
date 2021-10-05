@@ -9,19 +9,26 @@ import java.util.Arrays;
 
 public class ReadHandler {
 
-    public ArrayList<String[]> ReadFile(String fileName){
-        ArrayList<String[]> theData = new ArrayList<>();
+    public static EmpolyeeRecords ReadFile(String fileName){
+        EmpolyeeRecords empolyeeRecords = new EmpolyeeRecords();
+
         try(BufferedReader reader = new BufferedReader(new FileReader(fileName))){
             String line;
+            boolean firstPass = true;
             while ((line = reader.readLine()) != null) {
-                String[] values = line.split("COMMA_DELIMITER");
-                theData.add(values);
+                if (firstPass){
+                    String[] values = line.split(",");
+                    firstPass = false;
+                    continue;
+                }
+                String[] values = line.split(",");
+                empolyeeRecords.setEmployeeData(values);
             }
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }catch (IOException ie){
             ie.printStackTrace();
         }
-        return theData;
+        return empolyeeRecords;
     }
 }

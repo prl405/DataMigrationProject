@@ -5,18 +5,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
 
-public class EmpolyeeRecords implements RecordCreatable {
-    ArrayList<Employee> employeeData;
-    SimpleDateFormat dateFormater = new SimpleDateFormat("dd-mm-yyyy");
+public class EmpolyeeRecords{
+    private ArrayList<Employee> employeeData = new ArrayList<>();
 
-    @Override
-    public EmpolyeeRecords arrayToEmployeeCollection(ArrayList<String[]> array) {
-        for (String[] row: array){
-            this.employeeData.add(new Employee(Integer.valueOf(row[0]), row[1], row[2], row[3], row[4], row[5], row[6],
-                    cleanDate(row[7]), cleanDate(row[8]), Integer.valueOf(row[9])));
-        }
-        return null;
+
+    public void setEmployeeData(String[] array) {
+        this.employeeData.add(new Employee(Integer.parseInt(array[0]), array[1], array[2], array[3], array[4], array[5], array[6],
+                cleanDate(array[7]), cleanDate(array[8]), Integer.parseInt(array[9])));
     }
+
+
 
     private Date cleanDate(String csvDate){
         if (csvDate == null){return null;}
@@ -30,4 +28,10 @@ public class EmpolyeeRecords implements RecordCreatable {
         java.sql.Date theDate = new java.sql.Date(utilDate.getTime());
         return theDate;
     }
+
+    public ArrayList<Employee> getEmployeeData() {
+        return employeeData;
+    }
+
+
 }
