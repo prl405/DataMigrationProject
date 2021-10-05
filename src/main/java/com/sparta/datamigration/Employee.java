@@ -34,12 +34,11 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return id == employee.id && salary == employee.salary && Objects.equals(title, employee.title) &&
-                Objects.equals(firstName, employee.firstName) &&
-                Objects.equals(middleNameInitial, employee.middleNameInitial) &&
-                Objects.equals(lastName, employee.lastName) && Objects.equals(gender, employee.gender) &&
-                Objects.equals(email, employee.email) && Objects.equals(birthDate, employee.birthDate) &&
-                Objects.equals(joinDate, employee.joinDate);
+        return id == employee.id;
+//                Objects.equals(firstName, employee.firstName) &&
+//                Objects.equals(middleNameInitial, employee.middleNameInitial) &&
+//                Objects.equals(lastName, employee.lastName) &&
+//                Objects.equals(email, employee.email);
     }
 
     @Override
@@ -63,4 +62,6 @@ public class Employee {
                 ", salary=" + salary +
                 '}';
     }
+
+
 }

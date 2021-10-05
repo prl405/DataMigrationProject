@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ReadHandler {
 
@@ -22,7 +20,7 @@ public class ReadHandler {
                     continue;
                 }
                 String[] values = line.split(",");
-                empolyeeRecords.setEmployeeData(values);
+                empolyeeRecords.setAllEmployeeData(values);
             }
         }catch (FileNotFoundException e){
             e.printStackTrace();

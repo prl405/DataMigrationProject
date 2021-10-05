@@ -1,13 +1,5 @@
 package com.sparta.datamigration;
 
-import java.io.*;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Program {
     public static void main(String[] args) {
 //        ReadHandler reader = new ReadHandler();
@@ -17,11 +9,13 @@ public class Program {
         EmpolyeeRecords test = ReadHandler.ReadFile("EmployeeRecords.csv");
         Employee e = test.getEmployeeData().get(0);
         Employee e2 = test.getEmployeeData().get(1);
+        Employee se = test.getSpecialEmployeeData().get(0);
         System.out.println(e.toString());
         System.out.println(e2.toString());
+        System.out.println(se.toString());
+        System.out.println(test.getEmployeeArrayLength());
+        System.out.println(test.getSpecialCasesLength());
 
-//        String[] abc = {"123", "543", "omg"};
-//        System.out.println(Integer.parseInt(abc[0]));
     }
 
 
