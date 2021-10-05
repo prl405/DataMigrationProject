@@ -1,22 +1,21 @@
 package com.sparta.datamigration;
 
 import java.io.*;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Program {
     public static void main(String[] args) {
-        String line = null;
-        try (BufferedReader in = new BufferedReader(new FileReader("EmployeeRecords.csv"));
-             BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"))){
+//        ReadHandler reader = new ReadHandler();
+//        ArrayList<String[]> temp = new ArrayList<>();
+//        System.out.println(Arrays.toString(reader.ReadFile("EmployeeRecords.csv").get(1)));
 
-            while ((line = in.readLine()) != null) {
-                System.out.println(line);
-                out.write(line + "\n");
-            }
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-        catch (IOException ie){
-            ie.printStackTrace();
-        }
+
     }
+
+
 }
