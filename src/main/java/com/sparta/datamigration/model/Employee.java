@@ -1,7 +1,6 @@
-package com.sparta.datamigration;
+package com.sparta.datamigration.model;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Employee {
@@ -43,8 +42,9 @@ public class Employee {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, firstName, middleNameInitial,
-                lastName, gender, email, birthDate, joinDate, salary);
+        return Objects.hash(id);
+//        , title, firstName, middleNameInitial,
+//                lastName, gender, email, birthDate, joinDate, salary);
     }
 
     @Override

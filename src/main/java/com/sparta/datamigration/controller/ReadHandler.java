@@ -1,4 +1,6 @@
-package com.sparta.datamigration;
+package com.sparta.datamigration.controller;
+
+import com.sparta.datamigration.model.EmpolyeeRecords;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

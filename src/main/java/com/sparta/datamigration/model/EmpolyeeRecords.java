@@ -1,4 +1,4 @@
-package com.sparta.datamigration;
+package com.sparta.datamigration.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,14 +28,13 @@ public class EmpolyeeRecords{
 
         java.util.Date utilDate = null;
         try {
-            utilDate = new SimpleDateFormat("MM/dd/yyyy").parse(csvDate);
+            utilDate = new SimpleDateFormat("MM/dd/yyyy").parse(csvDate); // What if csvDate is not of the specified pattern?
         } catch (ParseException e) {
             e.printStackTrace();
         }
         java.sql.Date theDate = new java.sql.Date(utilDate.getTime());
         return theDate;
     }
-
 
 
     public ArrayList<Employee> getEmployeeData() {
@@ -51,17 +50,9 @@ public class EmpolyeeRecords{
         return employeeArrayLength;
     }
 
-    public void setEmployeeArrayLength(int employeeArrayLength) {
-        this.employeeArrayLength = employeeArrayLength;
-    }
-
     public int getSpecialCasesLength() {
         specialCasesLength = specialEmployeeData.size();
         return specialCasesLength;
-    }
-
-    public void setSpecialCasesLength(int specialCasesLength) {
-        this.specialCasesLength = specialCasesLength;
     }
 
 
