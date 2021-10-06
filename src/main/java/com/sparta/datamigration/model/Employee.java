@@ -63,5 +63,43 @@ public class Employee {
                 '}';
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleNameInitial() {
+        return middleNameInitial;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
 }

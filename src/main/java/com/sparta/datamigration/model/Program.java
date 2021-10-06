@@ -18,7 +18,7 @@ public class Program {
 //        System.out.println(test.getEmployeeArrayLength());
 //        System.out.println(test.getSpecialCasesLength());
         TheDriver.initializer("EmployeeRecords.csv");
-        JDBCConnector.createEmployeeDatabase("testfilename.db");
+//        JDBCConnector.createEmployeeDatabase("testfilename.db");
 
     }
 
