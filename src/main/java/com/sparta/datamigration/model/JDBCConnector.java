@@ -7,13 +7,19 @@ public class JDBCConnector {
     public static void createEmployeeDatabase(EmpolyeeRecords theData, String dataBaseFileName){
         try(Connection con = DriverManager.getConnection("jdbc:sqlite:" + dataBaseFileName);
             Statement statement = con.createStatement();
+
         ) {
-//            statement.executeUpdate("DROP TABLE TEST");
-//            statement.executeUpdate("DROP TABLE TEST_TABLE");
-            statement.executeUpdate("DROP TABLE EMPLOYEES");
+//
+            if (statement.execute("SELECT Emp_ID FROM Employees")){ // Checks if Ids call returns a valid object hence if it exists
+                statement.executeUpdate("DROP TABLE Employees");
+            }
+            if (statement.execute("SELECT Emp_ID FROM DuplicateIds")){
+                statement.executeUpdate("DROP TABLE DuplicateIds");
+            }
+
             statement.executeUpdate("CREATE TABLE Employees(\n" +
                     "\t\tEmp_ID INT NOT NULL PRIMARY KEY,\n" +
-                    "\t\tName_Prefix TEXT,\n" +
+                    "\t\tName_Prefix VARCHAR(10),\n" +
                     "\t\tFirst_Name TEXT NOT NULL,\n" +
                     "\t\tMiddle_Name TEXT,\n" +
                     "\t\tLast_Name TEXT,\n" +
@@ -26,7 +32,7 @@ public class JDBCConnector {
 
             statement.executeUpdate("CREATE TABLE DuplicateIds(\n" +
                     "\t\tEmp_ID INT NOT NULL PRIMARY KEY,\n" +
-                    "\t\tName_Prefix TEXT,\n" +
+                    "\t\tName_Prefix VARCHAR(10),\n" +
                     "\t\tFirst_Name TEXT NOT NULL,\n" +
                     "\t\tMiddle_Name TEXT,\n" +
                     "\t\tLast_Name TEXT,\n" +
@@ -49,7 +55,7 @@ public class JDBCConnector {
 
             for (Employee e: theData.getEmployeeData()){
                 preparedStatement.setString(1, Integer.toString(e.getId()));
-                preparedStatement.setString(2, e.getTitle());
+                preparedStatement.setString(2, String.valueOf(e.getTitle()));
                 preparedStatement.setString(3, e.getFirstName());
                 preparedStatement.setString(4, e.getMiddleNameInitial());
                 preparedStatement.setString(5, e.getLastName());
@@ -78,12 +84,10 @@ public class JDBCConnector {
             }
 
 
-
-
-
             System.out.println("Database created successfully...");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 }
