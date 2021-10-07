@@ -19,7 +19,7 @@ public class JDBCConnector {
 
             statement.executeUpdate("CREATE TABLE Employees(\n" +
                     "\t\tEmp_ID INT NOT NULL PRIMARY KEY,\n" +
-                    "\t\tName_Prefix VARCHAR(10),\n" +
+                    "\t\tName_Prefix TEXT,\n" +
                     "\t\tFirst_Name TEXT NOT NULL,\n" +
                     "\t\tMiddle_Name TEXT,\n" +
                     "\t\tLast_Name TEXT,\n" +

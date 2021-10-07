@@ -3,6 +3,7 @@ package com.sparta.datamigration.controller;
 import com.sparta.datamigration.model.Employee;
 import com.sparta.datamigration.model.EmpolyeeRecords;
 import com.sparta.datamigration.model.JDBCConnector;
+import com.sparta.datamigration.view.UserInput;
 import com.sparta.datamigration.view.UserMessages;
 
 public class TheDriver {
@@ -12,7 +13,8 @@ public class TheDriver {
         UserMessages.resultsMessage(empolyeeRecords.getEmployeeArrayLength(),
                 empolyeeRecords.getSpecialCasesLength());
 
-        JDBCConnector.createEmployeeDatabase(empolyeeRecords, "testfilename.db");
+//        JDBCConnector.createEmployeeDatabase(empolyeeRecords, "testfilename.db");
+        UserInput.retrieveData();
 
 //        Employee e = empolyeeRecords.getEmployeeData().get(0);
 //        Employee e2 = empolyeeRecords.getEmployeeData().get(1);
