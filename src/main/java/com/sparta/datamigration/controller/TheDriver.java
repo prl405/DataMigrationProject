@@ -13,7 +13,8 @@ public class TheDriver {
         UserMessages.resultsMessage(empolyeeRecords.getEmployeeArrayLength(),
                 empolyeeRecords.getSpecialCasesLength());
 
-//        JDBCConnector.createEmployeeDatabase(empolyeeRecords, "testfilename.db");
+        JDBCConnector.createEmployeeDatabase();
+        JDBCConnector.createEmployeeTables(empolyeeRecords);
         UserInput.retrieveData();
 
 //        Employee e = empolyeeRecords.getEmployeeData().get(0);

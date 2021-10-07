@@ -1,16 +1,21 @@
 package com.sparta.datamigration.view;
 
+import com.sparta.datamigration.model.JDBCConnector;
+
 import java.sql.*;
 import java.util.Scanner;
 
 public class UserInput {
+    static final String DB_URL = "jdbc:mysql://localhost:3306/";
+    static final String USER = "DefaultUser";
+    static final String PASS = "DUpassword";
 
     public static void retrieveData() {
         String employeeID;
         String choice = "y";
         Scanner scan = new Scanner(System.in);
 
-        try (Connection con = DriverManager.getConnection("jdbc:sqlite:" + "testfilename.db");
+        try (Connection con = DriverManager.getConnection(DB_URL + "EmployeeRecs", USER, PASS);
              Statement statement = con.createStatement();
         ) {
             while (choice.equals("y")) {
