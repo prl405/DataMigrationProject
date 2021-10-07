@@ -4,10 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EmpolyeeRecords{
-    private ArrayList<Employee> employeeData = new ArrayList<>();
-    private ArrayList<Employee> specialEmployeeData = new ArrayList<>();
+    private CopyOnWriteArrayList<Employee> employeeData = new CopyOnWriteArrayList<>();
+    private CopyOnWriteArrayList<Employee> specialEmployeeData = new CopyOnWriteArrayList<>();
     private int employeeArrayLength;
     private int specialCasesLength;
 
@@ -37,11 +38,11 @@ public class EmpolyeeRecords{
     }
 
 
-    public ArrayList<Employee> getEmployeeData() {
+    public CopyOnWriteArrayList<Employee> getEmployeeData() {
         return employeeData;
     }
 
-    public ArrayList<Employee> getSpecialEmployeeData() {
+    public CopyOnWriteArrayList<Employee> getSpecialEmployeeData() {
         return specialEmployeeData;
     }
 
