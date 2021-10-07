@@ -32,7 +32,7 @@ public class JDBCConnector {
 
             statement.executeUpdate("CREATE TABLE DuplicateIds(\n" +
                     "\t\tEmp_ID INT NOT NULL PRIMARY KEY,\n" +
-                    "\t\tName_Prefix VARCHAR(10),\n" +
+                    "\t\tName_Prefix TEXT,\n" +
                     "\t\tFirst_Name TEXT NOT NULL,\n" +
                     "\t\tMiddle_Name TEXT,\n" +
                     "\t\tLast_Name TEXT,\n" +
@@ -44,18 +44,18 @@ public class JDBCConnector {
                     ")");
 
             PreparedStatement preparedStatement =
-                    con.prepareStatement("INSERT INTO EMPLOYEES(Emp_ID, Emp_ID,First_Name," +
+                    con.prepareStatement("INSERT INTO EMPLOYEES(Emp_ID, Name_Prefix,First_Name," +
                             "Middle_Name, Last_Name, Gender, Email, Date_of_Birth, Date_of_Job, Salary) " +
                             "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             PreparedStatement preparedStatementSC =
-                    con.prepareStatement("INSERT INTO DuplicateIds(Emp_ID, Emp_ID,First_Name," +
+                    con.prepareStatement("INSERT INTO DuplicateIds(Emp_ID, Name_Prefix,First_Name," +
                             "Middle_Name, Last_Name, Gender, Email, Date_of_Birth, Date_of_Job, Salary) " +
                             "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 
             for (Employee e: theData.getEmployeeData()){
                 preparedStatement.setString(1, Integer.toString(e.getId()));
-                preparedStatement.setString(2, String.valueOf(e.getTitle()));
+                preparedStatement.setString(2, e.getTitle());
                 preparedStatement.setString(3, e.getFirstName());
                 preparedStatement.setString(4, e.getMiddleNameInitial());
                 preparedStatement.setString(5, e.getLastName());
