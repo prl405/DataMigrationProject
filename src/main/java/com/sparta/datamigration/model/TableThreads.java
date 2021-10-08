@@ -1,21 +1,25 @@
 package com.sparta.datamigration.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TableThreads implements Runnable{
     private ArrayList<Employee> whichTable;
-    private Connection theConnection;
     private int lowerIndex;
     private int upperIndex;
     private String sqlTableName;
 
-    public void insertTableValues(ArrayList<Employee> whichTable, String sqlTableName, Connection theConnection,
+    static final String DB_URL = "jdbc:mysql://localhost:3306/";
+    static final String USER = "DefaultUser";
+    static final String PASS = "DUpassword";
+
+    public void insertTableValues(ArrayList<Employee> whichTable, String sqlTableName,
                                   int lowerIndex, int upperIndex) {
 
-            try {
+            try(Connection theConnection = DriverManager.getConnection(DB_URL + "EmployeeRecs", USER, PASS)) {
                 PreparedStatement thePrepStatement =
                         theConnection.prepareStatement("INSERT INTO " + sqlTableName + "(Emp_ID, Name_Prefix,First_Name," +
                                 "Middle_Name, Last_Name, Gender, Email, Date_of_Birth, Date_of_Job, Salary) " +
@@ -40,9 +44,8 @@ public class TableThreads implements Runnable{
 
     }
 
-    public TableThreads(ArrayList<Employee> whichTable, String sqlTableName, Connection theConnection, int lowerIndex, int upperIndex) {
+    public TableThreads(ArrayList<Employee> whichTable, String sqlTableName, int lowerIndex, int upperIndex) {
         this.whichTable = whichTable;
-        this.theConnection = theConnection;
         this.lowerIndex = lowerIndex;
         this.upperIndex = upperIndex;
         this.sqlTableName = sqlTableName;
@@ -50,7 +53,7 @@ public class TableThreads implements Runnable{
 
     @Override
     public void run() {
-        insertTableValues(this.whichTable, this.sqlTableName, this.theConnection, this.lowerIndex, this.upperIndex);
+        insertTableValues(this.whichTable, this.sqlTableName, this.lowerIndex, this.upperIndex);
     }
 
 }

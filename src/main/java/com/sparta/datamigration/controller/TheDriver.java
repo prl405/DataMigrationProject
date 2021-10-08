@@ -24,16 +24,11 @@ public class TheDriver {
 
         timer.startTimer();
         JDBCConnector.createEmployeeDatabase();
-        JDBCConnector.createEmployeeTables(empolyeeRecords);
+        JDBCConnector.createEmployeeTables(empolyeeRecords.getEmployeeData(), "Employees", 8);
+        JDBCConnector.createEmployeeTables(empolyeeRecords.getSpecialEmployeeData(), "DuplicateIds", 2);
         timeTaken = timer.endTimer();
         UserMessages.displayDatabaseWriteRuntime(timeTaken);
         UserInput.retrieveData();
 
-//        Employee e = empolyeeRecords.getEmployeeData().get(0);
-//        Employee e2 = empolyeeRecords.getEmployeeData().get(1);
-//        Employee se = empolyeeRecords.getSpecialEmployeeData().get(0);
-//        System.out.println(e.toString());
-//        System.out.println(e2.toString());
-//        System.out.println(se.toString());
     }
 }

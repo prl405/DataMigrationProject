@@ -17,6 +17,6 @@ public class UserMessages {
     }
 
     public static void displayDatabaseWriteRuntime(float runtime){
-        System.out.println("Database write runtime: " + runtime);
+        System.out.println("Database write runtime: " + runtime + "(ms)");
     }
 }

@@ -24,7 +24,7 @@ public class EmpolyeeRecords{
         }
     }
 
-    private Date cleanDate(String csvDate){
+    public Date cleanDate(String csvDate){
         if (csvDate == null){return null;}
 
         java.util.Date utilDate = null;
