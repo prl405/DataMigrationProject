@@ -1,92 +1,81 @@
 package com.sparta.datamigration.model;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class JDBCConnector {
+    static final String DB_URL = "jdbc:mysql://localhost:3306/";
+    static final String USER = "DefaultUser";
+    static final String PASS = "DUpassword";
 
-    public static void createEmployeeDatabase(EmpolyeeRecords theData, String dataBaseFileName){
-        try(Connection con = DriverManager.getConnection("jdbc:sqlite:" + dataBaseFileName);
+    public static void createEmployeeDatabase(){
+        try(Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement statement = con.createStatement();
 
         ) {
-//
-            if (statement.execute("SELECT Emp_ID FROM Employees")){ // Checks if Ids call returns a valid object hence if it exists
-                statement.executeUpdate("DROP TABLE Employees");
-            }
-            if (statement.execute("SELECT Emp_ID FROM DuplicateIds")){
-                statement.executeUpdate("DROP TABLE DuplicateIds");
-            }
-
-            statement.executeUpdate("CREATE TABLE Employees(\n" +
-                    "\t\tEmp_ID INT NOT NULL PRIMARY KEY,\n" +
-                    "\t\tName_Prefix TEXT,\n" +
-                    "\t\tFirst_Name TEXT NOT NULL,\n" +
-                    "\t\tMiddle_Name TEXT,\n" +
-                    "\t\tLast_Name TEXT,\n" +
-                    "\t\tGender TEXT,\n" +
-                    "\t\tEmail TEXT,\n" +
-                    "\t\tDate_of_Birth DATE,\n" +
-                    "\t\tDate_of_Job DATE,\n" +
-                    "\t\tSalary INT\n" +
-                    ")");
-
-            statement.executeUpdate("CREATE TABLE DuplicateIds(\n" +
-                    "\t\tEmp_ID INT NOT NULL PRIMARY KEY,\n" +
-                    "\t\tName_Prefix TEXT,\n" +
-                    "\t\tFirst_Name TEXT NOT NULL,\n" +
-                    "\t\tMiddle_Name TEXT,\n" +
-                    "\t\tLast_Name TEXT,\n" +
-                    "\t\tGender TEXT,\n" +
-                    "\t\tEmail TEXT,\n" +
-                    "\t\tDate_of_Birth DATE,\n" +
-                    "\t\tDate_of_Job DATE,\n" +
-                    "\t\tSalary INT\n" +
-                    ")");
-
-            PreparedStatement preparedStatement =
-                    con.prepareStatement("INSERT INTO EMPLOYEES(Emp_ID, Name_Prefix,First_Name," +
-                            "Middle_Name, Last_Name, Gender, Email, Date_of_Birth, Date_of_Job, Salary) " +
-                            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement preparedStatementSC =
-                    con.prepareStatement("INSERT INTO DuplicateIds(Emp_ID, Name_Prefix,First_Name," +
-                            "Middle_Name, Last_Name, Gender, Email, Date_of_Birth, Date_of_Job, Salary) " +
-                            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-
-            for (Employee e: theData.getEmployeeData()){
-                preparedStatement.setString(1, Integer.toString(e.getId()));
-                preparedStatement.setString(2, e.getTitle());
-                preparedStatement.setString(3, e.getFirstName());
-                preparedStatement.setString(4, e.getMiddleNameInitial());
-                preparedStatement.setString(5, e.getLastName());
-                preparedStatement.setString(6, e.getGender());
-                preparedStatement.setString(7, e.getEmail());
-                preparedStatement.setString(8, String.valueOf(e.getBirthDate()));
-                preparedStatement.setString(9, String.valueOf(e.getJoinDate()));
-                preparedStatement.setString(10, Integer.toString(e.getSalary()));
-                preparedStatement.execute();
-
-            }
-
-            for (Employee e: theData.getSpecialEmployeeData()){
-                preparedStatementSC.setString(1, Integer.toString(e.getId()));
-                preparedStatementSC.setString(2, e.getTitle());
-                preparedStatementSC.setString(3, e.getFirstName());
-                preparedStatementSC.setString(4, e.getMiddleNameInitial());
-                preparedStatementSC.setString(5, e.getLastName());
-                preparedStatementSC.setString(6, e.getGender());
-                preparedStatementSC.setString(7, e.getEmail());
-                preparedStatementSC.setString(8, String.valueOf(e.getBirthDate()));
-                preparedStatementSC.setString(9, String.valueOf(e.getJoinDate()));
-                preparedStatementSC.setString(10, Integer.toString(e.getSalary()));
-                preparedStatementSC.execute();
-
-            }
-
+          statement.executeUpdate("CREATE DATABASE IF NOT EXISTS EmployeeRecs");
 
             System.out.println("Database created successfully...");
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void createEmployeeTables(ArrayList<Employee> employeeArrayList, String tableName, int numberOfThreads){
+        try(Connection con = DriverManager.getConnection(DB_URL + "EmployeeRecs", USER, PASS);
+            Statement statement = con.createStatement();
+
+        ) {
+
+            if (statement.execute("SELECT Emp_ID FROM " + tableName)){ // Checks if Ids call returns a valid object hence if it exists
+                statement.executeUpdate("DROP TABLE " + tableName);
+            }
+
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + "(\n" +
+                    "\t\tEmp_ID INT NOT NULL PRIMARY KEY,\n" +
+                    "\t\tName_Prefix VARCHAR(50),\n" +
+                    "\t\tFirst_Name VARCHAR(50) NOT NULL,\n" +
+                    "\t\tMiddle_Name VARCHAR(50),\n" +
+                    "\t\tLast_Name VARCHAR(50),\n" +
+                    "\t\tGender VARCHAR(50),\n" +
+                    "\t\tEmail VARCHAR(50),\n" +
+                    "\t\tDate_of_Birth DATE,\n" +
+                    "\t\tDate_of_Job DATE,\n" +
+                    "\t\tSalary INT\n" +
+                    ")");
+
+            startThreads(divideThreads(employeeArrayList, numberOfThreads, tableName));
+
+
+            System.out.println("Table: " + tableName + " created successfully...");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static ArrayList<Thread> divideThreads(ArrayList<Employee> employeeArrayList, int numberOfThreads,
+                                      String tableName){
+        ArrayList<Thread> theThreads = new ArrayList<>();
+
+        for(int i = 0; i < numberOfThreads; i++){
+            TableThreads table = new TableThreads(employeeArrayList, tableName,
+                    (employeeArrayList.size()/numberOfThreads) * i,
+                    (employeeArrayList.size()/numberOfThreads) * (i + 1)); //Divide array up
+
+            theThreads.add(new Thread(table));
+        }
+        return theThreads;
+    }
+
+    private static void startThreads(ArrayList<Thread> theThreads) throws InterruptedException{
+        for (Thread t: theThreads){
+            t.start();
+        }
+
+        for(Thread t: theThreads){
+            t.join();
         }
     }
 

@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EmpolyeeRecords{
     private ArrayList<Employee> employeeData = new ArrayList<>();
@@ -23,7 +24,7 @@ public class EmpolyeeRecords{
         }
     }
 
-    private Date cleanDate(String csvDate){
+    public Date cleanDate(String csvDate){
         if (csvDate == null){return null;}
 
         java.util.Date utilDate = null;

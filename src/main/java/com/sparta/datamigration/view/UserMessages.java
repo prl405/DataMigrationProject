@@ -11,4 +11,12 @@ public class UserMessages {
         System.out.println(specialCasesResults +
                 " special case entries");
     }
+
+    public static void displayCollectionReadRuntime(float runtime){
+        System.out.println("Collection read runtime: " + runtime);
+    }
+
+    public static void displayDatabaseWriteRuntime(float runtime){
+        System.out.println("Database write runtime: " + runtime + "(ms)");
+    }
 }
