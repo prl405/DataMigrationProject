@@ -1,6 +1,5 @@
 package com.sparta.datamigration.controller;
 
-import com.sparta.datamigration.model.Employee;
 import com.sparta.datamigration.model.EmpolyeeRecords;
 import com.sparta.datamigration.model.JDBCConnector;
 import com.sparta.datamigration.model.MyTimer;
@@ -24,8 +23,8 @@ public class TheDriver {
 
         timer.startTimer();
         JDBCConnector.createEmployeeDatabase();
-        JDBCConnector.createEmployeeTables(empolyeeRecords.getEmployeeData(), "Employees", 8);
-        JDBCConnector.createEmployeeTables(empolyeeRecords.getSpecialEmployeeData(), "DuplicateIds", 2);
+        JDBCConnector.createEmployeeTables(empolyeeRecords.getEmployeeData(), "Employees", 10);
+        JDBCConnector.createEmployeeTables(empolyeeRecords.getSpecialEmployeeData(), "DuplicateIds", 1);
         timeTaken = timer.endTimer();
         UserMessages.displayDatabaseWriteRuntime(timeTaken);
         UserInput.retrieveData();
