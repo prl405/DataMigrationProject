@@ -3,19 +3,24 @@ package com.sparta.datamigration.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.ArrayList;
 
 public class TableThreads implements Runnable{
-    private CopyOnWriteArrayList<Employee> whichTable;
-    private PreparedStatement thePrepStatement;
+    private ArrayList<Employee> whichTable;
+    private Connection theConnection;
     private int lowerIndex;
     private int upperIndex;
+    private String sqlTableName;
 
-    public void insertTableValues(CopyOnWriteArrayList<Employee> whichTable, PreparedStatement thePrepStatement,
+    public void insertTableValues(ArrayList<Employee> whichTable, String sqlTableName, Connection theConnection,
                                   int lowerIndex, int upperIndex) {
 
             try {
+                PreparedStatement thePrepStatement =
+                        theConnection.prepareStatement("INSERT INTO " + sqlTableName + "(Emp_ID, Name_Prefix,First_Name," +
+                                "Middle_Name, Last_Name, Gender, Email, Date_of_Birth, Date_of_Job, Salary) " +
+                                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
                 for (int i = lowerIndex; i < upperIndex; i++) {
                     thePrepStatement.setString(1, Integer.toString(whichTable.get(i).getId()));
                     thePrepStatement.setString(2, whichTable.get(i).getTitle());
@@ -35,21 +40,17 @@ public class TableThreads implements Runnable{
 
     }
 
-//    public TableThreads(CopyOnWriteArrayList<Employee> whichTable, PreparedStatement thePrepStatement) {
-//        this.whichTable = whichTable;
-//        this.thePrepStatement = thePrepStatement;
-//    }
-
-    public TableThreads(CopyOnWriteArrayList<Employee> whichTable, PreparedStatement thePrepStatement, int lowerIndex, int upperIndex) {
+    public TableThreads(ArrayList<Employee> whichTable, String sqlTableName, Connection theConnection, int lowerIndex, int upperIndex) {
         this.whichTable = whichTable;
-        this.thePrepStatement = thePrepStatement;
+        this.theConnection = theConnection;
         this.lowerIndex = lowerIndex;
         this.upperIndex = upperIndex;
+        this.sqlTableName = sqlTableName;
     }
 
     @Override
     public void run() {
-        insertTableValues(this.whichTable, this.thePrepStatement, this.lowerIndex, this.upperIndex);
+        insertTableValues(this.whichTable, this.sqlTableName, this.theConnection, this.lowerIndex, this.upperIndex);
     }
 
 }

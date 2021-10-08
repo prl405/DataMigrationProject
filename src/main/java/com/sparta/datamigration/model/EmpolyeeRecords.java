@@ -7,8 +7,8 @@ import java.sql.Date;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EmpolyeeRecords{
-    private CopyOnWriteArrayList<Employee> employeeData = new CopyOnWriteArrayList<>();
-    private CopyOnWriteArrayList<Employee> specialEmployeeData = new CopyOnWriteArrayList<>();
+    private ArrayList<Employee> employeeData = new ArrayList<>();
+    private ArrayList<Employee> specialEmployeeData = new ArrayList<>();
     private int employeeArrayLength;
     private int specialCasesLength;
 
@@ -38,11 +38,11 @@ public class EmpolyeeRecords{
     }
 
 
-    public CopyOnWriteArrayList<Employee> getEmployeeData() {
+    public ArrayList<Employee> getEmployeeData() {
         return employeeData;
     }
 
-    public CopyOnWriteArrayList<Employee> getSpecialEmployeeData() {
+    public ArrayList<Employee> getSpecialEmployeeData() {
         return specialEmployeeData;
     }
 

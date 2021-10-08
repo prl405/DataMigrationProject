@@ -25,7 +25,7 @@ public class JDBCConnector {
             Statement statement = con.createStatement();
 
         ) {
-//            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS EmployeeRecs");
+            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS EmployeeRecs");
             if (statement.execute("SELECT Emp_ID FROM Employees")){ // Checks if Ids call returns a valid object hence if it exists
                 statement.executeUpdate("DROP TABLE Employees");
             }
@@ -59,14 +59,15 @@ public class JDBCConnector {
                     "\t\tSalary INT\n" +
                     ")");
 
-            PreparedStatement preparedStatement =
-                    con.prepareStatement("INSERT INTO EMPLOYEES(Emp_ID, Name_Prefix,First_Name," +
-                            "Middle_Name, Last_Name, Gender, Email, Date_of_Birth, Date_of_Job, Salary) " +
-                            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement preparedStatementSC =
-                    con.prepareStatement("INSERT INTO DuplicateIds(Emp_ID, Name_Prefix,First_Name," +
-                            "Middle_Name, Last_Name, Gender, Email, Date_of_Birth, Date_of_Job, Salary) " +
-                            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+//            PreparedStatement thePrepStatement =
+//                    theConnection.prepareStatement("INSERT INTO EMPLOYEES(Emp_ID, Name_Prefix,First_Name," +
+//                            "Middle_Name, Last_Name, Gender, Email, Date_of_Birth, Date_of_Job, Salary) " +
+//                            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+//            PreparedStatement preparedStatementSC =
+//                    con.prepareStatement("INSERT INTO DuplicateIds(Emp_ID, Name_Prefix,First_Name," +
+//                            "Middle_Name, Last_Name, Gender, Email, Date_of_Birth, Date_of_Job, Salary) " +
+//                            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 
 //            for (Employee e: theData.getEmployeeData()){
@@ -84,17 +85,17 @@ public class JDBCConnector {
 //
 //            }
 
-            TableThreads table1 = new TableThreads(theData.getEmployeeData(), preparedStatement, 0,
+            TableThreads table1 = new TableThreads(theData.getEmployeeData(), "Employees", con, 0,
                     theData.getEmployeeArrayLength()/2);
             Thread t1 = new Thread(table1);
             t1.start();
 
-            TableThreads table3 = new TableThreads(theData.getEmployeeData(), preparedStatement,
+            TableThreads table3 = new TableThreads(theData.getEmployeeData(),"Employees", con,
                     (theData.getEmployeeArrayLength()/2), theData.getEmployeeArrayLength());
             Thread t3 = new Thread(table3);
             t3.start();
 
-            TableThreads table2 = new TableThreads(theData.getSpecialEmployeeData(), preparedStatementSC,
+            TableThreads table2 = new TableThreads(theData.getSpecialEmployeeData(), "DuplicateIds", con,
                     0, theData.getSpecialCasesLength());
             Thread t2 = new Thread(table2);
             t2.start();
