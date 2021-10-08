@@ -13,10 +13,10 @@ public class UserMessages {
     }
 
     public static void displayCollectionReadRuntime(float runtime){
-        System.out.println("Collection read runtime: " + runtime);
+        System.out.println("Collection read runtime: " + runtime + "(s)");
     }
 
     public static void displayDatabaseWriteRuntime(float runtime){
-        System.out.println("Database write runtime: " + runtime + "(ms)");
+        System.out.println("Database write runtime: " + runtime + "(s)");
     }
 }

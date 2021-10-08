@@ -18,10 +18,10 @@ public class EmployeeRecordsTests {
     public void givenEmployeeTestData_ReturnCorrectArrayListOfEmployees(){
         ArrayList<Employee> correctArrayList = new ArrayList<>();
 
-        correctArrayList.add(TestVariables.employee1);
-        correctArrayList.add(TestVariables.employee2);
-        correctArrayList.add(TestVariables.employee3);
-        correctArrayList.add(TestVariables.employee4);
+        correctArrayList.add(TestVariables.EMPLOYEE_1);
+        correctArrayList.add(TestVariables.EMPLOYEE_2);
+        correctArrayList.add(TestVariables.EMPLOYEE_3);
+        correctArrayList.add(TestVariables.EMPLOYEE_4);
 
 
         assertArrayEquals(correctArrayList.toArray(), testEmployeeRecords.getEmployeeData().toArray());
@@ -32,7 +32,7 @@ public class EmployeeRecordsTests {
     public void givenEmployeeTestData_ReturnCorrectArrayListOfSpecialCases(){
         ArrayList<Employee> correctSpecialCasesArrayList = new ArrayList<>();
 
-        correctSpecialCasesArrayList.add(TestVariables.employee5);
+        correctSpecialCasesArrayList.add(TestVariables.EMPLOYEE_5);
 
         assertArrayEquals(correctSpecialCasesArrayList.toArray(), testEmployeeRecords.getSpecialEmployeeData().toArray());
     }
